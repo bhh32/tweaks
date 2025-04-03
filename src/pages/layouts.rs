@@ -10,11 +10,11 @@ use crate::{app::{TweakTool, TweakMessage}, core::icons, fl};
 pub mod config;
 pub mod preview;
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct Layouts {
     pub helper: Option<Config>,
     pub config: LayoutsConfig,
-    selected_layout: Option<Layout>,
+    pub(crate) selected_layout: Option<Layout>,
 }
 
 impl Default for Layouts {

@@ -46,6 +46,7 @@ pub struct TweakTool {
     modifiers: Modifiers,
     color_schemes: ColorSchemes,
     layouts: Layouts,
+    theme_packs: ThemePack,
     context_page: ContextPage,
     app_themes: Vec<String>,
     config_handler: Option<cosmic_config::Config>,
@@ -255,6 +256,7 @@ impl Application for TweakTool {
             modifiers: Modifiers::empty(),
             color_schemes: ColorSchemes::default(),
             layouts: Layouts::default(),
+            theme_packs: ThemePack::default(), // Initialize the ThemePack field
             context_page: ContextPage::About,
             app_themes: vec![fl!("match-desktop"), fl!("dark"), fl!("light")],
             config_handler: flags.config_handler,
@@ -284,11 +286,10 @@ impl Application for TweakTool {
                 .view()
                 .map(Box::new)
                 .map(Message::ColorSchemes),
-            NavPage::Dock => Dock::
-            default().view().map(Message::Dock),
+            NavPage::Dock => Dock::default().view().map(Message::Dock),
             NavPage::Panel => pages::panel::Panel::default().view().map(Message::Panel),
             NavPage::Layouts => self.layouts.view().map(Message::Layouts),
-            NavPage::ThemePacks => pages::theme_pack::ThemePack::default().view().map(Message::ThemePacks),
+            NavPage::ThemePacks => self.theme_packs.view().map(Message::ThemePacks),
         };
 
         widget::column::with_children(vec![view])
